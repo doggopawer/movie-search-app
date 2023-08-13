@@ -26,9 +26,9 @@ import SearchInput from "./components/SearchInput.vue";
 import SearchResult from "./components/SearchResult.vue";
 import DetailModal from "./components/DetailModal.vue";
 import axios from "axios";
-import ResponseValue from "./type";
-import ModalEventData from "./type";
-
+import ResponseValue from "./types";
+import ModalEventData from "./types";
+import { API_KEY, API_URL } from "./constants";
 export default defineComponent({
   name: "App",
   components: {
@@ -54,7 +54,7 @@ export default defineComponent({
         const inputElement = event.target as HTMLInputElement;
         this.searchText = inputElement.value;
         const response = await axios.get(
-          `https://www.omdbapi.com/?s=${this.searchText}&apikey=e4ff4dd2`
+          `${API_URL}?s=${this.searchText}&apikey=${API_KEY}`
         );
         const searchList = response.data.Search;
         this.searchList = searchList;
@@ -89,7 +89,7 @@ export default defineComponent({
     },
     async loadMoreData() {
       const response = await axios.get(
-        `https://www.omdbapi.com/?s=${this.searchText}&page=${this.currentPage}&apikey=e4ff4dd2`
+        `${API_URL}?s=${this.searchText}&page=${this.currentPage}&apikey=${API_KEY}`
       );
 
       this.searchList = this.searchList.concat(response.data.Search);
@@ -100,7 +100,7 @@ export default defineComponent({
       this.modal = true;
       const currentTarget = event.currentTarget as HTMLInputElement;
       const response = await axios.get(
-        `https://www.omdbapi.com/?i=${currentTarget.id}&apikey=e4ff4dd2`
+        `${API_URL}?i=${currentTarget.id}&apikey=${API_KEY}`
       );
       this.searchItem = response.data;
       this.isLoading = false;
