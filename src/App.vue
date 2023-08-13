@@ -27,6 +27,7 @@ import SearchResult from "./components/SearchResult.vue";
 import DetailModal from "./components/DetailModal.vue";
 import axios from "axios";
 import ResponseValue from "./type";
+import ModalEventData from "./type";
 
 export default defineComponent({
   name: "App",
@@ -48,7 +49,7 @@ export default defineComponent({
     };
   },
   methods: {
-    async handleChangeSearchText(event: Event) {
+    async handleChangeSearchText(event: InputEvent) {
       this.handleDebounce(async () => {
         const inputElement = event.target as HTMLInputElement;
         this.searchText = inputElement.value;
@@ -93,7 +94,7 @@ export default defineComponent({
 
       this.searchList = this.searchList.concat(response.data.Search);
     },
-    async handleOpenModal(event: Event) {
+    async handleOpenModal(event: MouseEvent) {
       event.stopPropagation();
       this.isLoading = true;
       this.modal = true;
@@ -104,7 +105,7 @@ export default defineComponent({
       this.searchItem = response.data;
       this.isLoading = false;
     },
-    async handleCloseModal(data: any) {
+    async handleCloseModal(data: ModalEventData) {
       const { modalEl, target } = data;
       if (this.modal && !modalEl.contains(target as Node)) {
         this.modal = false;

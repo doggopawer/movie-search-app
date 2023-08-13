@@ -28,3 +28,7 @@ export default interface ResponseValue {
   Website: string;
   Response: string;
 }
+export default interface ModalEventData {
+  modalEl: HTMLElement;
+  target: EventTarget;
+}
